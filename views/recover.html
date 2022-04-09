@@ -1,0 +1,32 @@
+$def with (message)
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Recover password</title>
+        <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
+    </head>
+    <body>
+        $if message is not None:
+            <div class="alert alert-danger" role="alert">
+                <strong>$message</strong>
+            </div>
+        <form method="POST" style="padding: 15px;">
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left has-icons-right">
+                  <input class="input is-danger" type="email" name="email" id="email" placeholder="Email input" value="hello@">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                  </span>
+                  <span class="icon is-small is-right">
+                    <i class="fas fa-exclamation-triangle"></i>
+                  </span>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                      <button class="button is-link">Submit</button>
+                </div>
+                </div>
+        </form>
+    </body>
+</html>
