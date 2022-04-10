@@ -9,7 +9,9 @@ urls = (
     '/verify', 'Verify',
     '/welcome', 'Welcome',
     '/logout','Logout',
-    '/recover', 'Recover',   #nos proprciona un diccionario para acceder a los archivos y funciones
+    '/recover', 'Recover', 
+    '/principal', 'Principal'
+    #nos proprciona un diccionario para acceder a los archivos y funciones
 )
 app = web.application(urls, globals()) #toma las urls de arriba e inicia con la ultima linea de este codigo
 render = web.template.render('views') #indica un conteo de las veces que se visita la pagina 
@@ -32,7 +34,7 @@ class Login: #crea la clase de inicio de sesion
             user = auth.sign_in_with_email_and_password(email, password) #indica que el usuario es la informacion del formulario
             print(user['localId']) #nos imprime el id del usuario
             web.setcookie('cookie', user['localId'])
-            return web.seeother("/login") #si es valido nos envia al html
+            return web.seeother("/welcome") #si es valido nos envia al html
         except Exception as error: #a menos que
             formato = json.loads(error.args[1]) #toma el argumento con la posicion 1 del arreglo de errores
             error = formato['error'] #indica que existe un error
@@ -74,7 +76,11 @@ class Recover:
 
 class Verify: #genera la clase verificar 
     def GET(self): #obtiene el valor
-        return render.verify() #regresa la clase registrar o verificar en este caso
+        return render.verify()
+        
+class Principal: #genera la clase verificar 
+    def GET(self): #obtiene el valor
+        return render.principal()
 
     def POST(self): #devuelve el valor
         formulario = web.input() #indica que el usuario insertara los datos
