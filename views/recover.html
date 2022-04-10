@@ -12,7 +12,7 @@ $def with (message)
             </div>
         <form method="POST" style="padding: 15px;">
             <div class="field">
-                <label class="label">Email</label>
+                <label class="label">A continuación, ingrese su correo:</label>
                 <div class="control has-icons-left has-icons-right">
                   <input class="input is-danger" type="email" name="email" id="email" placeholder="Email input" value="">
                   <span class="icon is-small is-left">
@@ -22,11 +22,23 @@ $def with (message)
                     <i class="fas fa-exclamation-triangle"></i>
                   </span>
                 </div>
+
+                <article class="message is-primary">
+                  <div class="message-header">
+                    <p>Importante</p>
+                    <button class="delete" aria-label="delete"></button>
+                  </div>
+                  <div class="message-body">
+                    Favor de verificar la bandeja de entrada del correo ingresado después de presionar el botón SUBMIT.
+                  </div>
+                </article>
+
                 <div class="field is-grouped">
                     <div class="control">
                       <button class="button is-primary">Submit</button>
                 </div>
                 </div>
         </form>
+
     </body>
 </html>
