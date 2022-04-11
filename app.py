@@ -13,7 +13,8 @@ urls = (
     '/logout','Logout',
     '/logout2','Logout2',
     '/recover', 'Recover', 
-    '/principal', 'Principal'
+    '/principal', 'Principal',
+    '/dashboard', 'Dashboard',
     #nos proprciona un diccionario para acceder a los archivos y funciones
 )
 app = web.application(urls, globals()) #toma las urls de arriba e inicia con la ultima linea de este codigo
@@ -157,6 +158,10 @@ class Principal: #genera la clase verificar
         password = formulario.password #contrasena toma el valor de contrasena 
         print(email, password) #imprime usuario y contrasena 
         return render.login() #verifica y devuelve un output
+
+class Dashboard: #genera la clase verificar 
+    def GET(self): #obtiene el valor
+        return render.dashboard()
 
 if __name__ == "__main__": #crea condicion
     web.config.debug = False #hace que no se muestren los errores que no queramos al usuario
