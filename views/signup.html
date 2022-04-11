@@ -1,0 +1,23 @@
+$def with (message)
+<!DOCTYPE html> 
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <div class="columns">
+          </div>
+        <title>Signup</title>
+    </head>
+    <body>
+        $message
+        <article class="panel is-primary">
+            <p class="panel-heading">
+              Registrarse
+            </p>
+        <form method="POST">
+            <input class="input is-focused" type="text" name="email" id="email">
+            <br>
+            <input class="input is-focused" type="password" name="password" id="password"><br>
+            <input class="button is-primary is-outlined" type="submit" value="Signup"><br>
+        </form>
+    </body>
+</html>
