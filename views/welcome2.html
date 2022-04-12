@@ -15,20 +15,33 @@
             <p class="level-item has-text-centered">
               <a href ="/principal">Home</a>
             </p>
-            <p class="level-item has-text-centered">
-              <a class="link is-info">Menu</a>
-            </p>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+               Administradores
+              </a>
+              <div class="navbar-dropdown">
+                <a class="navbar-item">
+                  Administrador 1
+                </a>
+              </div>
+            </div><br>
             <figure class="image is-128x128">
                 <img class="is-rounded" src="https://static.vecteezy.com/system/resources/previews/004/108/819/large_2x/faces-profile-avatars-people-expression-simple-heads-male-female-persons-cartoon-illustrations-profile-male-female-people-face-user-happy-free-vector.jpg">
             </figure>
             <p class="level-item has-text-centered">
-              <a href="/dashboard2">Dashboard</a>
-            </p>
-            <p class="level-item has-text-centered">
                 <a href ="/login">Logout</a>
               </p>
           </nav>
-
-          
+          <aside class="menu">
+            <p class="menu-label">
+              General
+            </p>
+            <ul class="menu-list">
+              <li><a href ="/dashboard2" disabled>Dashboard</a></li>
+            </ul>
+            <br>
+            <button class="button is-info" title="Disabled button" disabled>Members</button>
+            <br>
+            <button class="button is-info" title="Disabled button" disabled>Add members</button>
     </body>
 </html>
