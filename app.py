@@ -171,3 +171,4 @@ class Dashboard2: #genera la clase verificar
 if __name__ == "__main__": #crea condicion
     web.config.debug = False #hace que no se muestren los errores que no queramos al usuario
     app.run() #corre el app.py
+    
