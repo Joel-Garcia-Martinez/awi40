@@ -3,3 +3,14 @@ import pyrebase #importa la libreria para el uso de firebase
 import firebase_config as token #configura el reconocimiento de token o id en firebase
 import json #importa el archivo json 
 
+
+
+class Welcome: #genera la clase bienvenido para mostrar al usuario en caso de acceder exitosamente 
+    def GET(self): #obtiene el valor 
+        mycookie = web.cookies().get("cookie")
+        if mycookie != "None":
+            return render.welcome()
+        elif mycookie == None:
+            return web.seeother("/login")
+        else:
+            return web.seeother("/login")
