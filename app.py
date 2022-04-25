@@ -4,18 +4,18 @@ import firebase_config as token #configura el reconocimiento de token o id en fi
 import json #importa el archivo json 
 
 urls = (
-    '/', 'Welcome',
-    '/login', 'Login',
-    '/login2', 'Login2',
-    '/signup', 'Signup',
-    '/welcome', 'Welcome',
-    '/welcome2', 'Welcome2',
-    '/logout','Logout',
-    '/logout2','Logout2',
-    '/recover', 'Recover', 
-    '/principal', 'Principal',
-    '/dashboard', 'Dashboard',
-    '/dashboard2', 'Dashboard2',
+    '/', 'mvc.controllers.welcome.Welcome',
+    '/login', 'mvc.controllers.login.Login',
+    '/login2', 'mvc.controllers.login.Login2',
+    '/signup', 'mvc.controllers.signup.Signup',
+    '/welcome', 'mvc.controllers.welcome.Welcome',
+    '/welcome2', 'mvc.controllers.welcome2.Welcome2',
+    '/logout','mvc.controllers.logout.Logout',
+    '/logout2','mvc.controllers.logout2.Logout2',
+    '/recover', 'mvc.controllers.recover.Recover', 
+    '/principal', 'mvc.controllers.principal.Principal',
+    '/dashboard', 'mvc.controllers.dashboard.Dashboard',
+    '/dashboard2', 'mvc.controllers.dashboard2.Dashboard2',
     #nos proprciona un diccionario para acceder a los archivos y funciones
 )
 app = web.application(urls, globals()) #toma las urls de arriba e inicia con la ultima linea de este codigo
