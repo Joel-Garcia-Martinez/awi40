@@ -1,0 +1,46 @@
+$def with (message)
+<!DOCTYPE html> 
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <div class="columns">
+          </div>
+        <title>Sucursales</title>
+    </head>
+    <body>
+        $message
+        <article class="panel is-info">
+            <p class="panel-heading">
+            Agregue los datos de la nueva sucursal!
+            </p>
+        <form method="POST">
+            <br>
+            <h2 class="subtitle">Datos de la nueva sucursal</h2>
+            <br>
+            <input class="input is-focused" type="text" placeholder="Introduzca numero de sucursal" name="numsuc" id="numsuc"> 
+            <input class="input is-focused" type="text" placeholder="Introduzca ubicacion de la sucursal" name="ubicacion" id="ubicacion">
+            <input class="input is-focused" type="text" placeholder="Introduzca fecha de apertura" name="apertura" id="apertura"><br>
+            <br>
+            <h2 class="subtitle">Datos del sistema</h2>
+            <br>
+            <h5 class="title is-5">El sistema cuenta con monitoreo de temperatura?</h5>
+            <input class="input is-focused" type="text" placeholder="Activo/Inactivo" name="temperatura" id="temperatura">
+            <h5 class="title is-5">El sistema cuenta con monitoreo de humedad?</h5>
+            <input class="input is-focused" type="text" placeholder="Activo/Inactivo" name="humedad" id="humedad"> 
+            <h5 class="title is-5">El sistema cuenta con sistema de enfriamiento?</h5>
+            <input class="input is-focused" type="text" placeholder="Activo/Inactivo" name="sistema" id="sistema"><br>
+            <br>
+            <h2 class="subtitle">Datos del creador</h2>
+            <br>
+            <input class="input is-focused" type="text" placeholder="Introduzca correo autorizado" name="email" id="email"> 
+            <br>
+            <input class="input is-focused" type="password" placeholder="Introduzca contrasena" name="password" id="password"><br>
+            <input class="button is-info is-outlined" type="submit" value="Crear sucursal"><br> 
+            <br>
+        </form>
+        <br>
+        <div>
+        <a href="/dashboard">Back</a>
+        </div>
+    </body>
+</html>
