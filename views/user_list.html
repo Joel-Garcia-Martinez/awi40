@@ -1,0 +1,33 @@
+$def with(users)
+<!DOCTYPE html> 
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <div class="columns">
+          </div>
+        <title>Usuarios</title>
+    </head>
+    <body>
+        <table class="table">
+            <thead>
+                <td>ID</td>
+                <td>Nombre</td>
+                <td>Email</td>
+                <td>Telefono</td>
+                <td>Nivel</td>
+                <td>Estatus</td>
+                <td>Actualizar</td>
+            </thead>
+            $for user in users: 
+            <tr>
+                <td>$user.key()</td>
+                <td>$user.val().get("nombre")</td>
+                <td>$user.val().get("email")</td>
+                <td>$user.val().get("telefono")</td>
+                <td>$user.val().get("nivel")</td>
+                <td>$user.val().get("estatus")</td>
+                <td><a href="/user_update/$user.key()" class="btn btn-info">Update</a></td>
+            </tr>
+        </table>
+    </body>
+</html>

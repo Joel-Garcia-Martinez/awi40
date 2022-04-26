@@ -18,7 +18,7 @@
                 <img class="is-rounded" src="https://i.pinimg.com/236x/e9/57/2a/e9572a70726980ed5445c02e1058760b.jpg">
             </figure>
             <p class="level-item has-text-centered">
-              <a href ="/signup">Agregar nuevo usuario</a>
+              <a href ="/user_list">Lista de usuarios</a>
             </p>
             <p class="level-item has-text-centered">
                 <a href ="/login">Logout</a>
@@ -45,16 +45,16 @@
               <figure class="image is-128x128">
                 <img class="is-rounded" src="https://i.pinimg.com/736x/3a/cd/de/3acdde2c7e9a471936e37445bf52ec54.jpg">
             </figure><br>
-            <button class="button is-info is-loading">Loading</button><br>
+            <button class="button is-info" id="temperatura1">{{sucursal_1}}</button><br>
           </div>
           <br>
           <div class="buttons has-addons is-centered">
             <button class="button is-warning is-focused">Humedad</button>
-              <br>
+              <br> 
               <figure class="image is-128x128">
                 <img class="is-rounded" src="https://e7.pngegg.com/pngimages/453/300/png-clipart-animated-sun-caricature-drawing-sun-photography-orange.png">
                </figure><br>
-            <button class="button is-warning is-loading">Loading</button>
+            <button class="button is-warning" id="humedad1">{{sucursal_1}}</button>
           </div>
           <br>
           <p class="subtitle is-4">Sistema de enfriamiento</p>
@@ -92,7 +92,7 @@
         <figure class="image is-128x128">
           <img class="is-rounded" src="https://i.pinimg.com/736x/3a/cd/de/3acdde2c7e9a471936e37445bf52ec54.jpg">
       </figure><br>
-      <button class="button is-info is-loading">Loading</button><br>
+      <button class="button is-info" id="temperatura2">{{sucursal_2}}</button><br>
     </div>
     <br>
     <div class="buttons has-addons is-centered">
@@ -101,7 +101,7 @@
         <figure class="image is-128x128">
           <img class="is-rounded" src="https://e7.pngegg.com/pngimages/453/300/png-clipart-animated-sun-caricature-drawing-sun-photography-orange.png">
          </figure><br>
-      <button class="button is-warning is-loading">Loading</button>
+      <button class="button is-warning" id="humedad2">{{sucursal_2}}</button>
     </div>
     <br>
     <p class="subtitle is-4">Sistema de enfriamiento</p>
@@ -117,5 +117,22 @@
   </div>
 </div>
 <br>
+
+<script>
+  window.setInterval(function(){
+      var request = new XMLHttpRequest();
+      request.open('GET', 'https://awi4jgm-default-rtdb.firebaseio.com/sucursales2.json');
+      request.onload = () => {
+        const response = request.responseText;
+        console.log(response);
+      const json = JSON.parse(response);
+        document.getElementById('temperatura1').innerHTML = json["sucursal_1"].temperatura;
+        document.getElementById('humedad1').innerHTML = json["sucursal_1"].humedad;
+        document.getElementById('temperatura2').innerHTML = json["sucursal_2"].temperatura;
+        document.getElementById('humedad2').innerHTML = json["sucursal_2"].humedad;
+      };
+      request.send();
+  }, 100);
+</script>
     </body>
 </html>

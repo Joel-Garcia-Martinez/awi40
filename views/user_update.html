@@ -1,0 +1,46 @@
+$def with(user)
+<!DOCTYPE html> 
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <div class="columns">
+          </div>
+        <title>Update</title>
+    </head>
+    <body>
+        <main class="form-signin">
+            <form method="POST">.
+                <h1 class="h3 mb-3 fw-normal">Actualizar datos</h1>
+                <div class="form-label-group">
+                    <label for="name">Nombre</label> 
+                    <input type="text" readonly class="form-control" id="nombre" value="$user.val().get('nombre')"> 
+                </div> 
+                <div class="form-label-group">
+                    <label for="name">Email</label>
+                    <input type="email" readonly class="form-control" id="email" value="$user.val().get('email')">
+                </div>
+                <div class="form-label-group">
+                    <label for="name">Telefono</label> 
+                    <input type="tel"  class="form-control" id="telefono" name="telefono">
+                </div> 
+                <div class="form-label-group">
+                    <label for="inputState">Nivel</label>
+                    <select name="nivel" id="inputState" class="form-control">
+                        <option>Nivel</option>
+                        <option value="administrador">Administrador</option>
+                        <option value="operador">Operador</option>
+                    </select>
+                </div>
+                <div class="form-label-group">
+                    <label for="inputState">Estatus</label>
+                    <select name="estatus" id="inputState" class="form-control">
+                        <option>Estatus</option>
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">Inactivo</option>
+                    </select>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary form-label-group" type="submit">Actualizar Datos</button>
+            </form> 
+        </main> 
+    </body>
+</html>  

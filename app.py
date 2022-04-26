@@ -17,6 +17,8 @@ urls = (
     '/dashboard', 'Dashboard',
     '/dashboard2', 'Dashboard2',
     '/sucursales', 'Sucursales',
+    '/user_list', 'User_list', 
+    '/user_update(.*)', 'User_update',
     #nos proprciona un diccionario para acceder a los archivos y funciones
 )
 app = web.application(urls, globals()) #toma las urls de arriba e inicia con la ultima linea de este codigo
@@ -33,7 +35,7 @@ class Login: #crea la clase de inicio de sesion
         try: #crea un condicional
             firebase = pyrebase.initialize_app(token.firebaseConfig) #inicializa los id de firebase
             auth = firebase.auth()
-             #extrae los usuarios registrados en firebase
+            db = firebase.database()
             formulario = web.input() #indica un formulario que el usuario puede rellenar 
             email = formulario.email #interpreta el email formulario
             password = formulario.password #interpreta la cotrasena del formulario
@@ -41,6 +43,17 @@ class Login: #crea la clase de inicio de sesion
             user = auth.sign_in_with_email_and_password(email, password) #indica que el usuario es la informacion del formulario
             print(user['localId']) #nos imprime el id del usuario
             web.setcookie('cookie', user['localId'])
+            
+            datitos = db.child("users").child(user['localId']).get()
+            print(datitos.val())
+            if datitos.val()['nivel'] == 'administrador' and datitos.val()['estatus'] == 'activo':
+                return web.seeother("/welcome")
+            elif datitos.val()['nivel'] == 'operador' and datitos.val()['estatus'] == 'activo':
+                return web.seeother("/welcome2") 
+            else:
+                message = 'Cuenta deshabilitada'
+                return render.login(message)
+
             return web.seeother("/welcome") #si es valido nos envia al html
         except Exception as error: #a menos que
             formato = json.loads(error.args[1]) #toma el argumento con la posicion 1 del arreglo de errores
@@ -130,8 +143,11 @@ class Signup: #crea la clase de inicio de sesion
             firebase = pyrebase.initialize_app(token.firebaseConfig) #inicializa los id de firebase
             auth = firebase.auth()
             db=firebase.database()
-             #extrae los usuarios registrados en firebase
             formulario = web.input() #indica un formulario que el usuario puede rellenar 
+            nombre = formulario.nombre
+            telefono = formulario.telefono
+            nivel = formulario.nivel
+            estatus = formulario.estatus 
             email = formulario.email #interpreta el email formulario
             password = formulario.password #interpreta la cotrasena del formulario
             print(email, password) #imprime contrasena y usuario insertados
@@ -139,10 +155,14 @@ class Signup: #crea la clase de inicio de sesion
             print(user['localId']) #nos imprime el id del usuario
 
             data = {
+                "nombre": nombre,
+                "telefono": telefono,
+                "nivel": nivel,
+                "estatus": estatus,
                 "email": email,
-                "password": password
+                "password": password,
             }
-            results = db.child("users").child(user['localId']).set(data)
+            datitos = db.child("users").child(user['localId']).set(data)
             return web.seeother("/welcome") #si es valido nos envia al html
         except Exception as error: #a menos que
             formato = json.loads(error.args[1]) #toma el argumento con la posicion 1 del arreglo de errores
@@ -151,8 +171,16 @@ class Signup: #crea la clase de inicio de sesion
             return render.signup(message)
         
 class Principal: #genera la clase verificar 
-    def GET(self): #obtiene el valor
-        return render.principal()
+    def GET(self):
+        try:#Se intenta con este codigo
+            if web.cookies().get('localId') == "None" : #se verifica si nuestra cookie contiene algun dato
+                return web.seeother("/login")#si nuestra cookie esta vacia, nos direccionara a la pagina de login
+            elif web.cookies().get('localId') == None : #se verifica si nuestra cookie contiene algun dato
+                return web.seeother("/login")#si nuestra cookie esta vacia, nos direccionara a la pagina de login
+            else:
+                return render.principal()
+        except Exception as error:
+            print("Error Inicio.GET: {}".format(error))
 
     def POST(self): #devuelve el valor
         formulario = web.input() #indica que el usuario insertara los datos
@@ -169,17 +197,16 @@ class Dashboard2: #genera la clase verificar
     def GET(self): #obtiene el valor
         return render.dashboard2()
 
-class Sucursales: #crea la clase de inicio de sesion 
-    def GET(self): #obtiene el valor
-        message = None #crea un condicional #crea un valor nulo
-        return render.sucursales(message) #indica un inicio de sesion exitoso
+class Sucursales: 
+    def GET(self): 
+        message = None 
+        return render.sucursales(message) 
 
-    def POST(self): #devuelve el valor
-        try: #crea un condicional
-            firebase = pyrebase.initialize_app(token.firebaseConfig) #inicializa los id de firebase
+    def POST(self): 
+        try: 
+            firebase = pyrebase.initialize_app(token.firebaseConfig) 
             auth = firebase.auth()
             db=firebase.database()
-             #extrae los usuarios registrados en firebase
             formulario = web.input() #indica un formulario que el usuario puede rellenar 
             numsuc = formulario.numsuc 
             ubicacion = formulario.ubicacion 
@@ -203,13 +230,47 @@ class Sucursales: #crea la clase de inicio de sesion
                 "Administrador que la creo": email,
                 "Contrasena": password,
             }
-            results = db.child("sucursales").child(user['localId']).set(data)
+            datitos = db.child("sucursales").child(user['localId']).set(data)
             return web.seeother("/welcome") #si es valido nos envia al html
         except Exception as error: #a menos que
             formato = json.loads(error.args[1]) #toma el argumento con la posicion 1 del arreglo de errores
             error = formato['error'] #indica que existe un error
             message = error['message'] #muestra el mensaje con el error
             return render.sucursales(message)
+
+class User_list:
+    def GET(self):
+        firebase = pyrebase.initialize_app(token.firebaseConfig)
+        db = firebase.database()
+        users = db.child("users").get()
+        return render.user_list(users) 
+
+class User_update:
+    def GET(self, localId):
+        try:
+            firebase = pyrebase.initialize_app(token.firebaseConfig) 
+            db = firebase.database()
+            user = db.child("users").child(localId).get()
+            return render.user_update(user) 
+        except Exception as error:
+            print("Error user update.GET: {}".format(error))
+    def POST(self, localId):
+        try: 
+            firebase = pyrebase.initialize_app(token.firebaseConfig) 
+            db = firebase.database()
+            formulario = web.input()
+            telefono = formulario.telefono
+            nivel = formulario.nivel
+            estatus = formulario.estatus
+            data = {
+                "telefono": telefono,
+                "nivel": nivel,
+                "estatus": estatus, 
+            }
+            db.child("users").child(localId).update(data)
+            return web.seeother("/user_list") 
+        except Exception as error:
+            print("Error user update.GET: {}".format(error))
 
 if __name__ == "__main__": #crea condicion
     web.config.debug = False #hace que no se muestren los errores que no queramos al usuario
