@@ -1,0 +1,55 @@
+$def with(sucursal)
+<!DOCTYPE html> 
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <div class="columns">
+          </div>
+        <title>Update Sucursal</title>
+    </head>
+    <body>
+        <main class="form-signin">
+            <form method="POST">.
+                <h1 class="h3 mb-3 fw-normal">Actualizar datos de sucursal</h1>
+
+                <div class="form-label-group">
+                    <label for="name">Numero de sucursal</label> 
+                    <input type="tel"  class="form-control" id="Numero de sucursal" name="numsuc">
+                </div> 
+                <div class="form-label-group">
+                    <label for="name">Estatus actual</label> 
+                    <input type="tel"  class="form-control" id="Estatus" name="estatus"> 
+                </div> 
+                <div class="form-label-group">
+                    <label for="name">Ubicacion</label> 
+                    <input type="text"  class="form-control" id="Ubicacion" name="ubicacion"> 
+                </div> 
+                <div class="form-label-group">
+                    <label for="name">Fecha de apertura</label> 
+                    <input type="text"  class="form-control" id="Fecha de apertura" name="apertura"> 
+                </div> 
+                <div class="form-label-group">
+                    <label for="name">Temperatura</label> 
+                    <input type="text"  class="form-control" id="Temperatura" name="temperatura"> 
+                </div> 
+                <div class="form-label-group">
+                    <label for="name">Humedad</label> 
+                    <input type="text"  class="form-control" id="Humedad" name="humedad"> 
+                </div> 
+                <div class="form-label-group">
+                    <label for="name">Sistema de enfriamiento</label> 
+                    <input type="text"  class="form-control" id="Sistema de enfriamiento" name="sistema"> 
+                </div> 
+                <div class="form-label-group">
+                    <label for="inputState">Estatus</label>
+                    <select name="estatus" id="inputState" class="form-control">
+                        <option>Estatus</option>
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">Inactivo</option>
+                    </select>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary form-label-group" type="submit">Actualizar Datos</button> 
+            </form> 
+        </main> 
+    </body>
+</html>  

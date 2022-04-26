@@ -1,0 +1,38 @@
+$def with(sucursales)
+<!DOCTYPE html> 
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <div class="columns">
+          </div>
+        <title>Sucursales</title>
+    </head>
+    <body>
+        <table class="table">
+            <thead>
+                <td>ID</td>
+                <td>Numero de sucursal</td>
+                <td>Estatus actual</td>
+                <td>Ubicacion</td>
+                <td>Fecha de apertura</td>
+                <td>Estado de temperatura</td>
+                <td>Estado de humedad</td>
+                <td>Sistema de enfriamiento</td>
+                <td>Correo de creador</td>
+            </thead> 
+            $for sucursal in sucursales: 
+            <tr> 
+                <td>$sucursal.key()</td>
+                <td>$sucursal.val().get("Numero de sucursal")</td>
+                <td>$sucursal.val().get("Estatus")</td>
+                <td>$sucursal.val().get("Ubicacion")</td>
+                <td>$sucursal.val().get("Fecha de apertura")</td>
+                <td>$sucursal.val().get("Temperatura")</td>
+                <td>$sucursal.val().get("Humedad")</td>
+                <td>$sucursal.val().get("Sistema de enfriamiento")</td>
+                <td>$sucursal.val().get("Administrador que la creo")</td>
+                <td><a href="/sucursal_update/$sucursal.key()" class="btn btn-info">Update</a></td>
+            </tr>
+        </table>
+    </body>
+</html>

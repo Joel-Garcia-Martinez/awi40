@@ -5,17 +5,16 @@ import json #importa el archivo json
 
 render = web.template.render("mvc/views",base="sucursales")
 
-class Sucursales: #crea la clase de inicio de sesion 
-    def GET(self): #obtiene el valor
-        message = None #crea un condicional #crea un valor nulo
-        return render.sucursales(message) #indica un inicio de sesion exitoso
+class Sucursales: 
+    def GET(self): 
+        message = None 
+        return render.sucursales(message) 
 
-    def POST(self): #devuelve el valor
-        try: #crea un condicional
-            firebase = pyrebase.initialize_app(token.firebaseConfig) #inicializa los id de firebase
+    def POST(self): 
+        try: 
+            firebase = pyrebase.initialize_app(token.firebaseConfig) 
             auth = firebase.auth()
             db=firebase.database()
-             #extrae los usuarios registrados en firebase
             formulario = web.input() #indica un formulario que el usuario puede rellenar 
             numsuc = formulario.numsuc 
             ubicacion = formulario.ubicacion 
@@ -39,7 +38,7 @@ class Sucursales: #crea la clase de inicio de sesion
                 "Administrador que la creo": email,
                 "Contrasena": password,
             }
-            results = db.child("sucursales").child(user['localId']).set(data)
+            datitos = db.child("sucursales").child(user['localId']).set(data)
             return web.seeother("/welcome") #si es valido nos envia al html
         except Exception as error: #a menos que
             formato = json.loads(error.args[1]) #toma el argumento con la posicion 1 del arreglo de errores

@@ -18,7 +18,9 @@ urls = (
     '/dashboard2', 'Dashboard2',
     '/sucursales', 'Sucursales',
     '/user_list', 'User_list', 
-    '/user_update(.*)', 'User_update',
+    '/user_update(.*)', 'User_update', 
+    '/sucursal_list', 'Sucursal_list',
+    '/sucursal_update(.*)', 'Sucursal_update', 
     #nos proprciona un diccionario para acceder a los archivos y funciones
 )
 app = web.application(urls, globals()) #toma las urls de arriba e inicia con la ultima linea de este codigo
@@ -51,12 +53,12 @@ class Login: #crea la clase de inicio de sesion
             elif datitos.val()['nivel'] == 'operador' and datitos.val()['estatus'] == 'activo':
                 return web.seeother("/welcome2") 
             else:
-                message = 'Cuenta deshabilitada'
+                message = 'Cuenta deshabilitada por un administrador'
                 return render.login(message)
 
-            return web.seeother("/welcome") #si es valido nos envia al html
-        except Exception as error: #a menos que
-            formato = json.loads(error.args[1]) #toma el argumento con la posicion 1 del arreglo de errores
+            return web.seeother("/welcome") 
+        except Exception as error:
+            formato = json.loads(error.args[1])
             error = formato['error'] #indica que existe un error
             message = error['message'] #muestra el mensaje con el error
             return render.login(message)
@@ -172,15 +174,7 @@ class Signup: #crea la clase de inicio de sesion
         
 class Principal: #genera la clase verificar 
     def GET(self):
-        try:#Se intenta con este codigo
-            if web.cookies().get('localId') == "None" : #se verifica si nuestra cookie contiene algun dato
-                return web.seeother("/login")#si nuestra cookie esta vacia, nos direccionara a la pagina de login
-            elif web.cookies().get('localId') == None : #se verifica si nuestra cookie contiene algun dato
-                return web.seeother("/login")#si nuestra cookie esta vacia, nos direccionara a la pagina de login
-            else:
-                return render.principal()
-        except Exception as error:
-            print("Error Inicio.GET: {}".format(error))
+        return render.principal()
 
     def POST(self): #devuelve el valor
         formulario = web.input() #indica que el usuario insertara los datos
@@ -221,14 +215,14 @@ class Sucursales:
             print(user['localId']) #nos imprime el id del usuario
 
             data = {
-                "Numero de sucursal": numsuc,
+                "Numero de sucursal": numsuc, 
                 "Ubicacion": ubicacion,
-                "Fecha de apertura": apertura,
-                "Temperatura": temperatura,
-                "Humedad": humedad,
+                "Fecha de apertura": apertura, 
+                "Temperatura": temperatura, 
+                "Humedad": humedad, 
                 "Sistema de enfriamiento": sistema,
                 "Administrador que la creo": email,
-                "Contrasena": password,
+                "Contrasena": password, 
             }
             datitos = db.child("sucursales").child(user['localId']).set(data)
             return web.seeother("/welcome") #si es valido nos envia al html
@@ -244,6 +238,13 @@ class User_list:
         db = firebase.database()
         users = db.child("users").get()
         return render.user_list(users) 
+
+class Sucursal_list:
+    def GET(self):
+        firebase = pyrebase.initialize_app(token.firebaseConfig)
+        db = firebase.database()
+        sucursales = db.child("sucursales").get() 
+        return render.sucursal_list(sucursales) 
 
 class User_update:
     def GET(self, localId):
@@ -271,6 +272,41 @@ class User_update:
             return web.seeother("/user_list") 
         except Exception as error:
             print("Error user update.GET: {}".format(error))
+
+class Sucursal_update:
+    def GET(self, localId):
+        try:
+            firebase = pyrebase.initialize_app(token.firebaseConfig) 
+            db = firebase.database()
+            sucursal = db.child("sucursales").child(localId).get()
+            return render.sucursal_update(sucursal) 
+        except Exception as error:
+            print("Error sucursal update.GET: {}".format(error)) 
+    def POST(self, localId): 
+        try: 
+            firebase = pyrebase.initialize_app(token.firebaseConfig) 
+            db = firebase.database()
+            formulario = web.input()
+            numsuc = formulario.numsuc 
+            estatus = formulario.estatus
+            ubicacion = formulario.ubicacion 
+            apertura = formulario.apertura
+            temperatura = formulario.temperatura
+            humedad = formulario.humedad
+            sistema = formulario.sistema
+            data = {
+                "Numero de sucursal": numsuc, 
+                "Ubicacion": ubicacion,
+                "Fecha de apertura": apertura, 
+                "Temperatura": temperatura, 
+                "Humedad": humedad, 
+                "Sistema de enfriamiento": sistema,
+                "Estatus": estatus,
+            }
+            db.child("sucursales").child(localId).update(data)
+            return web.seeother("/sucursal_list") 
+        except Exception as error:
+            print("Error sucursal update.GET: {}".format(error))
 
 if __name__ == "__main__": #crea condicion
     web.config.debug = False #hace que no se muestren los errores que no queramos al usuario
